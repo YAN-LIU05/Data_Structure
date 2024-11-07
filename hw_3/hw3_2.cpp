@@ -170,7 +170,7 @@ bool Tree::tree_compareDFS(const Tree &t1, const Tree &t2, int i1, int i2) {
         return false; // 如果节点名称不同，返回 false
     // 检查同构情况
     return ((tree_compareDFS(t1, t2, t1.list[i1].l, t2.list[i2].l) && tree_compareDFS(t1, t2, t1.list[i1].r, t2.list[i2].r)) ||
-            (tree_compareDFS(t1, t2, t1.list[i1].l, t2.list[i2].r) && tree_compareDFS(t1, t2, t1.list[i1].r, t2.list[i2].l)));
+            (tree_compareDFS(t1, t2, t1.list[i1].l, t2.list[i2].r) && tree_compareDFS(t1, t2, t1.list[i1].r, t2.list[i2].l)));           
 }
 
 // 字符串转化为整数
