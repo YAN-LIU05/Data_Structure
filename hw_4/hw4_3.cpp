@@ -45,18 +45,32 @@ public:
 
 
 // --- Graph 类外实现 ---
-
+/**
+ * @brief           向图中添加边
+ * @param u         边的起点
+ * @param v         边的终点
+ * @param weight    边的权重
+ */
 void Graph::addEdge(int u, int v, int weight) {
-    edges[edgeCount++] = Edge(u, v, weight);
+    edges[edgeCount++] = Edge(u, v, weight); // 将边添加到边数组，并增加边计数
 }
 
+/**
+ * @brief           初始化并查集
+ * @param n         图中节点的数量
+ */
 void Graph::initUnionFind(int n) {
     for (int i = 0; i < n; ++i) {
-        parent[i] = i;
-        rank[i] = 0;
+        parent[i] = i; // 每个节点的父节点初始化为自身
+        rank[i] = 0; // 每个节点的排序初始化为0
     }
 }
 
+/**
+ * @brief           查找节点x的根节点，并进行路径压缩
+ * @param x         要查找的节点
+ * @return          返回根节点
+ */
 int Graph::find(int x) {
     if (parent[x] != x) {
         parent[x] = find(parent[x]); // 路径压缩
@@ -64,6 +78,12 @@ int Graph::find(int x) {
     return parent[x];
 }
 
+/**
+ * @brief           合并两个集合
+ * @param x         第一个节点
+ * @param y         第二个节点
+ * @return          如果合并成功返回 true，否则返回 false
+ */
 bool Graph::unionSets(int x, int y) {
     int rootX = find(x);
     int rootY = find(y);
@@ -81,6 +101,9 @@ bool Graph::unionSets(int x, int y) {
     return false;
 }
 
+/**
+ * @brief           对图中的边进行排序
+ */
 void Graph::sortEdges() {
     for (int i = 0; i < edgeCount - 1; ++i) {
         for (int j = 0; j < edgeCount - i - 1; ++j) {
@@ -93,12 +116,19 @@ void Graph::sortEdges() {
     }
 }
 
+/**
+ * @brief           使用克鲁斯卡尔算法找到最小生成树的总权重
+ * @param n         图中节点的数量
+ * @return          返回最小生成树的总权重
+ */
 int Graph::kruskal(int n) {
     sortEdges();          // 对边按权重排序
     int totalCost = 0;
 
-    for (int i = 0; i < edgeCount; ++i) {
-        if (unionSets(edges[i].u, edges[i].v)) {
+   for (int i = 0; i < edgeCount; ++i) {
+        int u = edges[i].u, v = edges[i].v;
+        if (find(u) != find(v)) { // 如果两点属于不同连通分量
+            unionSets(u, v);
             totalCost += edges[i].weight;
         }
     }
@@ -135,6 +165,11 @@ int main() {
     for (int i = 0; i < m; ++i) {
         int a, b;
         cin >> a >> b;
+        // 检查输入范围
+    if (a < 1 || a > n || b < 1 || b > n) {
+        return -1; // 停止程序或抛出错误
+    }
+        graph.addEdge(a - 1, b - 1, 0); // 添加边以供 Kruskal 排序和使用
         graph.unionSets(a - 1, b - 1); // 直接合并已有的路
     }
 

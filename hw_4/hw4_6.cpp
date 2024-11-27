@@ -48,8 +48,12 @@ public:
     }
 };
 
-
-
+/**
+ * @brief           使用dijkstra算法计算从起点到所有其他点的最短路径
+ * @param graph     图的引用
+ * @param dis       距离数组，存储从起点到各点的距离
+ * @param start     起点
+ */
 void dijkstra(Graph& graph, int* dis, int start) {
     priority_queue<Node> pq;
     bool vis[MAX_NODE_NUM] = {false};

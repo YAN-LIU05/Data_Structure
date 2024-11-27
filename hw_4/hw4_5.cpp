@@ -66,7 +66,11 @@ public:
 
 // 函数体外实现
 
-// 添加边
+/**
+ * @brief           向图中添加边
+ * @param src        边的起点
+ * @param dst        边的终点
+ */
 void Graph_course::add(int src, int dst) {
     ArcNode* p = vertices[src].first_arc;
     ArcNode* q = new ArcNode();
@@ -83,12 +87,20 @@ void Graph_course::add(int src, int dst) {
     arc_num++;
 }
 
-// 返回最大值
+/**
+ * @brief           返回两个整数中的最大值
+ * @param a         第一个整数
+ * @param b         第二个整数
+ * @return          返回 a 和 b 中的最大值
+ */
 int Graph_course::max(int a, int b) {
     return a > b ? a : b;
 }
 
-// 拓扑排序计算每门课程的最早完成时间
+/**
+ * @brief           拓扑排序计算每门课程的最早完成时间
+ * @return          如果拓扑排序成功返回 true，否则返回 false
+ */
 bool Graph_course::topo_sort() {
     int cnt = 0;
     while (true) {
@@ -121,7 +133,12 @@ bool Graph_course::topo_sort() {
     return cnt == vex_num;
 }
 
-// 深度优先搜索，检查课程是否影响总毕业时间
+/**
+ * @brief           深度优先搜索，检查课程是否影响总毕业时间
+ * @param cur       当前课程
+ * @param tgt       目标课程
+ * @return          如果当前课程影响目标课程的毕业时间返回 true，否则返回 false
+ */
 bool Graph_course::dfs(int cur, int tgt) {
     if (cur == tgt) return true;
     if (vertices[cur].pre_size == 0) return false;

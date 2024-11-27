@@ -59,9 +59,15 @@ struct Queue {
     }
 };
 
-// 计算六度空间范围
+/**
+ * @brief           计算六度空间范围内的节点数
+ * @param graph     图的引用
+ * @param start     起始节点
+ * @return          返回覆盖的节点数
+ */
 int sixDegrees(Graph& graph, int start) {
-    bool visited[MAXN + 1] = {0}; // 访问标记数组
+    bool visited[MAXN + 1]; // 访问标记数组
+    memset(visited, 0, sizeof(visited));
     Queue queue;
     queue.init();
 
@@ -106,7 +112,7 @@ int main() {
     // 遍历每个节点，计算其六度空间覆盖率
     for (int i = 1; i <= n; ++i) {
         int reachable = sixDegrees(graph, i);
-        double percentage = (double)reachable / n * 100.0;
+        float percentage = (float)reachable / n * 100.0;
         cout << i << ": " << fixed << setprecision(2) << percentage << "%" << endl;
     }
 

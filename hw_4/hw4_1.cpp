@@ -63,6 +63,10 @@ struct Component {
 
     // 添加节点
     void addNode(int node) {
+        for (int i = 0; i < size; ++i) {
+            if (nodes[i] == node) 
+                return;
+        }
         nodes[size++] = node;
     }
 
@@ -78,7 +82,14 @@ void Component::print() {
     }
     cout << "}";
 }
-// 深度优先搜索
+
+/**
+ * @brief           深度优先搜索（DFS）算法
+ * @param graph     图的引用
+ * @param v         当前节点
+ * @param component 连通分量的引用
+ */
+
 void dfs(Graph& graph, int v, Component& component) {
     graph.visited[v] = true;
     component.addNode(v);
@@ -90,7 +101,12 @@ void dfs(Graph& graph, int v, Component& component) {
     }
 }
 
-// 广度优先搜索
+/**
+ * @brief           广度优先搜索（BFS）算法
+ * @param graph     图的引用
+ * @param start     起始节点
+ * @param component 连通分量的引用
+ */
 void bfs(Graph& graph, int start, Component& component) {
     Queue queue;
     queue.init();
@@ -160,3 +176,4 @@ int main() {
 
     return 0;
 }
+
